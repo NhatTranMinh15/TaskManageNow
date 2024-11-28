@@ -36,14 +36,14 @@ public class CommentController {
         return ResponseEntity.ok().body(result);
     }
 
-//    @GetMapping("/user")
-//    public ResponseEntity getAllMyComment(Pageable pageable, Authentication authentication) {
-//        PageResponse result = service.getAllOfUser(pageable, authentication);
-//        return ResponseEntity.ok().body(result);
-//    }
-//    @GetMapping("/user/{user_id}")
-//    public ResponseEntity getAllCommentOfUser(@PathVariable("user_id") UUID userId, Pageable pageable, Authentication authentication) {
-//        PageResponse result = service.getAllOfUser(userId, pageable, authentication);
-//        return ResponseEntity.ok().body(result);
-//    }
+    @GetMapping("/user")
+    public ResponseEntity getAllMyComment(Pageable pageable, Authentication authentication) {
+        PageResponse result = service.getAllOfUser(pageable, authentication);
+        return ResponseEntity.ok().body(result);
+    }
+    @GetMapping("/user/{user_id}")
+    public ResponseEntity getAllCommentOfUser(@PathVariable("user_id") UUID userId, Pageable pageable, Authentication authentication) {
+        PageResponse result = service.getAllOfUser(userId, pageable, authentication);
+        return ResponseEntity.ok().body(result);
+    }
 }
