@@ -1,4 +1,4 @@
-import { auth } from '@/auth';
+import { auth, signIn } from '@/auth';
 import axios, { AxiosError } from 'axios';
 import { redirect } from 'next/navigation';
 
@@ -9,9 +9,10 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(async (config) => {
-    const session = await auth();
+    const session = await auth();    
+    
     if (session) {
-        config.headers.Authorization = `Bearer ${session.accessToken}`;
+        config.headers.Authorization = `Bearer ${session.access_token}`;
     }
     return config;
 }, (error) => {
@@ -20,7 +21,7 @@ axiosInstance.interceptors.request.use(async (config) => {
 
 axiosInstance.interceptors.response.use(
     response => response,
-    (error) => {
+    async (error) => {        
         if (error instanceof AxiosError) {
             if (error.status === 401) {
                 return Promise.reject(redirect("/api/auth/signout"));

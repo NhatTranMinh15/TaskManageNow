@@ -2,8 +2,11 @@ import React from 'react'
 import { fetchTasks } from '../api/task/route'
 import { PriorityColor, StatusColor, TaskModel } from '../models/Task';
 import Pagination from '../components/Pagination';
+import { getURLParams, URLParams } from '../models/General';
 
-type Props = {}
+type Props = URLParams & {
+}
+
 const headers = [
     { name: "ID", value: "id", isCurrentlySorted: false, colStyle: {}, hiddenOnSmall: false },
     { name: "Summary", value: "summary", isCurrentlySorted: false, colStyle: {}, hiddenOnSmall: false },
@@ -16,24 +19,28 @@ const headers = [
 const maxColLength = headers.length
 
 const Task = async (props: Props) => {
-    const response = await fetchTasks("");
-    const { content: tasks, currentPage, totalElements, totalPage } = response
-    
+    const { currentPage, search } = await getURLParams(props)
+
+    const response = await fetchTasks({ page: currentPage, size: 5, sort: "", search: search });
+    console.log(response);
+
+    const { content: tasks, totalElements, totalPage } = response
+
     function handleRowClick(data: TaskModel) {
     }
     return (
         <>
-            {/* <div className="flex flex-row">
+            <div className="flex flex-row">
                 <div className="basis-1/4 p-2">
-                    <select name="select-all-tasks" defaultValue={searchParams.get("all") || "false"} className="w-full select-green" onChange={(e) => { handleSetParam("all", e.target.value) }}>
-                        <option value={"false"} className="">My Task</option>
+                    <select name="select-all-tasks" defaultValue={"false"} className="w-full select select-green">
+                        <option value={"false"} className="option-green">My Task</option>
                         <option value="true" className="">All Tasks</option>
                     </select>
                 </div>
                 <div className="basis-1/4 p-2">
-                    <button className="button button-green" onClick={() => { navigate("create") }}>Create New Task</button>
+                    <button className="button button-green">Create New Task</button>
                 </div>
-            </div> */}
+            </div>
             <>
                 {
                     tasks &&
