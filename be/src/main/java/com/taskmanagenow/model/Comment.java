@@ -11,7 +11,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class Comment extends BaseModel{
+public class Comment extends BaseModel {
+
     @Column()
     private String content;
 
