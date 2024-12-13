@@ -1,13 +1,24 @@
 import { StaticImageData } from "next/image";
+import { CSSProperties } from "react";
 
-export type PageableModel = {
-    page: number;
-    size: number;
+export type Header = {
+    name: string,
+    value: string,
+    isCurrentlySorted: boolean,
+    colStyle: CSSProperties,
+    hiddenOnSmall: boolean
+}
+
+export type URLParams = {
+    search: string;
+    page: string;
+    size: string;
     sort: string;
 }
 
-export type SearchPageableModel = PageableModel & {
-    search: string;
+export type Error = {
+    message: string;
+    status: string | number;
 }
 
 export type Page<T> = {
@@ -16,16 +27,19 @@ export type Page<T> = {
     currentPage: number;
     totalElements: number;
 }
+
 export const emptyPage: Page<any> = {
     content: [],
     currentPage: 1,
     totalElements: 0,
     totalPage: 0
 }
+
 export type TLink = {
     link: string;
     name: string;
 }
+
 export type TImage = {
     id?: string;
     src: string;

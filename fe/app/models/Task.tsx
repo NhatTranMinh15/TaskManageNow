@@ -1,3 +1,4 @@
+import { URLParams } from "./General";
 import { UserModel } from "./User";
 
 export type TaskModelShort = {
@@ -18,21 +19,21 @@ export type TaskModel = {
     description: string,
     status: Status,
     priority: Priority,
-    created_at: string,
-    user: UserModel
+    assignee: string,
+    dueDate: string
+    createdAt: string,
+    timeTracking: string,
 }
 
-export type TaskParamModel = {
-    [key: string]: string | number | undefined | null;
-    id: string | undefined | null,
-    user_id: string | undefined | null,
-    summary: string | undefined | null,
-    description: string | undefined | null,
-    created_from: string | null,
-    created_to: string | null,
-    all: string | "true" | "false",
-    page: number,
-    size: number
+export type TaskParamModel = URLParams & {
+    id: string,
+    summary: string,
+    description: string,
+    createdFrom: string,
+    createdTo: string,
+    all: "true" | "false",
+    status: Status,
+    priority: Priority,
 }
 
 export type CreateTaskModel = {
@@ -41,7 +42,9 @@ export type CreateTaskModel = {
     description: string,
     status: Status,
     priority: Priority,
-    user_id: string | undefined,
+    user_id?: string,
+    assignee?: string,
+    dueDate?:string
 }
 
 export enum Priority {

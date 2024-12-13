@@ -1,13 +1,11 @@
 export interface UserModel {
     [key: string]: string | boolean; // Add an index signature to support dynamic property access
     id: string,
-    email: string,
     username: string,
-    first_name: string,
-    last_name: string,
-    created_at: string,
-    is_admin: boolean,
-    company_id: string
+    firstName: string,
+    lastName: string,
+    email: string,
+    createdTimestamp: string,
 }
 
 export interface UserParamModel {
