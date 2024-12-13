@@ -1,11 +1,9 @@
-import axios, { AxiosError } from "axios"
 import NextAuth, { NextAuthConfig } from "next-auth"
 import { JWT } from "next-auth/jwt"
-import Keycloak from "next-auth/providers/keycloak"
-import { redirect } from 'next/navigation'
+import GitHub from "next-auth/providers/github"
 
 export const authConfig: NextAuthConfig = {
-    providers: [Keycloak],
+    providers: [GitHub],
     callbacks: {
         authorized: async ({ request, auth }) => {
             if (request.nextUrl.pathname === '/') return true
@@ -13,6 +11,8 @@ export const authConfig: NextAuthConfig = {
             return !!auth
         },
         jwt: async ({ token, account, user }) => {
+            // console.log(token);
+            
             if (account) {
                 return {
                     ...token,
@@ -33,35 +33,32 @@ export const authConfig: NextAuthConfig = {
             return session;
         },
     },
-    secret: process.env.NEXTAUTH_SECRET
 }
 export const { handlers, signIn, signOut, auth } = NextAuth(authConfig)
 
 async function refreshToken(token: JWT) {
     const url = `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`;
     try {
-        const param = new URLSearchParams({
-            client_id: process.env.AUTH_KEYCLOAK_ID!,
-            client_secret: process.env.AUTH_KEYCLOAK_SECRET!,
-            grant_type: "refresh_token",
-            refresh_token: token.refresh_token!,
+        const response = await fetch(url, {
+            method: "POST",
+            body: new URLSearchParams({
+                client_id: process.env.AUTH_KEYCLOAK_ID!,
+                client_secret: process.env.AUTH_KEYCLOAK_SECRET!,
+                grant_type: "refresh_token",
+                refresh_token: token.refresh_token!,
+            }),
         })
-        const response = await axios.post(url, param)        
-        const body = await response.data
-
-        return {
-            ...token,
-            access_token: body.access_token,
-            expires_at: (Date.now() + (body.expires_in || 300) * 1000),
-            refresh_token: body.refresh_token,
-        } as JWT
-    } catch (error) {
-        if (error instanceof AxiosError) {
-            const err = error.response?.data
-            if (err && err.error_description === 'Token is not active') {
-                return redirect('/api/auth/signin')
+        const body = await response.json()
+        if (response.ok) {
+            return {
+                ...token,
+                access_token: body.access_token,
+                expires_at: (Date.now() + (body.expires_in || 300) * 1000),
+                refresh_token: body.refresh_token,
             }
         }
-        return redirect('/api/auth/signin')
+    } catch (error) {
     }
+
+    return token
 }

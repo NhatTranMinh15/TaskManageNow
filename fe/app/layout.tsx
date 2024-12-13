@@ -28,10 +28,11 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Header></Header>
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        <main className="w-full h-full px-[15px] mt-[15px]">
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </main>
         <Footer></Footer>
       </body>
-
     </html>
   );
 }
