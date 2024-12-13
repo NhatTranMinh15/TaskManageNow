@@ -2,12 +2,13 @@ package com.taskmanagenow.controller;
 
 import com.taskmanagenow.service.UserService;
 import com.taskmanagenow.dto.request.UserSaveRequest;
-import java.util.List;
+import com.taskmanagenow.dto.response.PageResponse;
+import com.taskmanagenow.dto.response.UserResponse;
 import java.util.UUID;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +26,15 @@ public class UserController {
     @Autowired
     UserService service;
 
-    @GetMapping()
-    public ResponseEntity getAll(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo, Authentication authentication) {
-        List<UserRepresentation> users = service.getAll(pageNo, authentication);
+    @GetMapping("")
+    public ResponseEntity getAll(@RequestParam("param") String param, Pageable pageable) {
+        PageResponse<UserResponse> users = service.getAll(param, pageable);
+        return ResponseEntity.ok().body(users);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getOne(@PathVariable("id") UUID id) {
+        UserRepresentation users = service.getOne(id);
         return ResponseEntity.ok().body(users);
     }
 

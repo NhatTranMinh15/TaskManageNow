@@ -3,7 +3,9 @@ package com.taskmanagenow.mapper;
 import com.taskmanagenow.dto.request.UserSaveRequest;
 import com.taskmanagenow.dto.response.UserResponse;
 import com.taskmanagenow.model.User;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Service;
 
@@ -64,10 +66,30 @@ public class UserMapper implements BaseMapper<User, UserSaveRequest, UserRespons
         return entity;
     }
 
+    public UserResponse ToResponseFromRepresentation(UserRepresentation representation) {
+        return new UserResponse(
+                representation.getId(),
+                representation.getUsername(),
+                representation.getEmail(),
+                representation.getFirstName(),
+                representation.getLastName()
+        );
+    }
+
+    public List<UserResponse> ToResponseListFromRepresentationList(List<UserRepresentation> list) {
+        return list.stream().map(this::ToResponseFromRepresentation).collect(Collectors.toList());
+    }
+
     public User fromRepresentation(UserRepresentation representation) {
         if (representation == null) {
             return null;
         }
-        return new User(UUID.fromString(representation.getId()), representation.getUsername(), representation.getEmail(), representation.getFirstName(), representation.getLastName());
+        return new User(
+                UUID.fromString(representation.getId()),
+                representation.getUsername(),
+                representation.getEmail(),
+                representation.getFirstName(),
+                representation.getLastName()
+        );
     }
 }

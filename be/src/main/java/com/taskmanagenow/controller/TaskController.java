@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,9 +28,8 @@ public class TaskController {
     private final TaskService service;
 
     @GetMapping()
-    public ResponseEntity getAll(@Valid TaskGetRequest request, Pageable pagable, Authentication authentication) {
-        Jwt jwt = (Jwt) authentication.getPrincipal();
-        PageResponse result = service.getAll(request, pagable, authentication);
+    public ResponseEntity getAll(@Valid TaskGetRequest request, Pageable pageable, Authentication authentication) {
+        PageResponse result = service.getAll(request, pageable, authentication);
         return ResponseEntity.ok().body(result);
     }
 
@@ -42,8 +40,9 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity createOne(@Valid @RequestBody TaskSaveRequest taskSaveRequest, Authentication authentication) {
-        TaskResponse result = service.saveOne(taskSaveRequest, authentication);
+    public ResponseEntity createOne(@Valid @RequestBody TaskSaveRequest request, Authentication authentication) {
+        System.out.println(request);
+        TaskResponse result = service.saveOne(request, authentication);
         return ResponseEntity.ok().body(result);
     }
 

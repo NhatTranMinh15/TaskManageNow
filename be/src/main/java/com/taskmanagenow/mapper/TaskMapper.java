@@ -28,6 +28,7 @@ public class TaskMapper implements BaseMapper<Task, TaskSaveRequest, TaskRespons
                 entity.getPriority(),
                 entity.getAssignee(),
                 entity.getDueDate(),
+                entity.getCreatedAt(),
                 entity.getTimeTracking());
     }
 
@@ -59,6 +60,9 @@ public class TaskMapper implements BaseMapper<Task, TaskSaveRequest, TaskRespons
         }
         if (request.getPriority() != null) {
             entity.setPriority(request.getPriority());
+        }
+        if (request.getAssignee() != null) {
+            entity.setAssignee(request.getAssignee());
         }
         return entity;
     }

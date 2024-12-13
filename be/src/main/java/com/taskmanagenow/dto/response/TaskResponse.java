@@ -18,7 +18,8 @@ public class TaskResponse {
     private Priority priority;
     private UUID assignee;
     private LocalDateTime dueDate;
+    private LocalDateTime createdAt;
+    private String timeTracking;
 //    private String comments;
 //    private Set<Task> subTasks;
-    private String timeTracking;
 }

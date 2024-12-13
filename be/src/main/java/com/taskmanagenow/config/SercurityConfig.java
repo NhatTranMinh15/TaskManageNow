@@ -21,6 +21,7 @@ public class SercurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((req) -> req
                 .requestMatchers("/actuator/*").hasRole(ADMIN)
+                .requestMatchers("/keycloak/*").hasRole(ADMIN)
                 .requestMatchers("/api/v1/admin/*").hasRole(ADMIN)
                 .anyRequest().authenticated());
         // remove csrf state in session because in jwt do not need them

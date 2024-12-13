@@ -40,7 +40,7 @@ public class CommentService implements CommentServiceInterface{
     }
 
     public PageResponse getAllOfUser(UUID userId, Pageable pageable, Authentication authentication) {
-        UserRepresentation user = userService.getOne(userId, authentication).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        UserRepresentation user = userService.getOne(userId);
         Page<Comment> result = repository.findAllByUserId(userId, pageable);
         return new PageResponse(mapper.ToResponseList(result.getContent()), result.getNumber(), result.getTotalPages(), result.getTotalElements());
     }

@@ -14,9 +14,9 @@ import jakarta.transaction.Transactional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -26,16 +26,15 @@ public class TaskService implements TaskServiceInterface {
     private final TaskRepository repository;
     private final TaskMapper mapper;
 
-    public PageResponse getAll(TaskGetRequest request, Pageable pagable, Authentication authentication) {
-        Jwt jwt = (Jwt) authentication.getPrincipal();
-
-//        TODO: Specification
-        Page<Task> result = repository.findAll(pagable);
+    public PageResponse getAll(TaskGetRequest request, Pageable pageable, Authentication authentication) {
+        //        TODO: Specification
+        PageRequest pageRequest = (PageRequest) pageable;
+        Page<Task> result = repository.findAll(pageRequest);
         return new PageResponse(mapper.ToResponseList(result.getContent()), result.getNumber(), result.getTotalPages(), result.getTotalElements());
     }
 
     public TaskResponse getOne(UUID id, Authentication authentication) {
-        Task result = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task does not exists!"));
+        Task result = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task does not exist!"));
         return mapper.ToResponse(result);
     }
 
