@@ -1,0 +1,6 @@
+.assignee-suggest {
+    @apply hidden absolute border border-black w-full mt-2
+}
+input#assignee:focus ~ .assignee-suggest{
+    @apply block
+}

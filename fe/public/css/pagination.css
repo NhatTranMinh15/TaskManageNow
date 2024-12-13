@@ -1,5 +1,10 @@
-.pagination-control-button, .pagination-button {
+.pagination-control-button,
+.pagination-button {
     @apply py-2 px-4 border bg-transparent border-traditional-forest-green dark:text-white-smoke dark:bg-charleston-green
+}
+
+.pagination-control-button {
+    @apply inline-block
 }
 
 .pagination-button {
@@ -10,7 +15,12 @@
     @apply bg-gray-400-opaque-40 dark:bg-slate-200-opaque-40 cursor-not-allowed;
 }
 
-.pagination-control-button:hover:enabled,
-.pagination-button:hover:enabled {
+.pagination-control-button:hover:disabled,
+.pagination-button:hover:disabled {
+    @apply bg-gray-400-opaque-40 dark:bg-slate-200-opaque-40;
+}
+
+.pagination-control-button:hover,
+.pagination-button:hover {
     @apply bg-green-munsell
 }

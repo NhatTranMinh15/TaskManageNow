@@ -1,0 +1,39 @@
+.container {
+    @apply relative flex items-center gap-2 p-2 w-full min-w-60 min-h-[1.5rem] border border-[#0f960f] rounded-lg text-base cursor-pointer duration-150
+}
+
+.container {
+    @apply flex-col 
+}
+
+.section {
+    @apply relative flex items-center gap-2 w-full;
+}
+
+.selections {
+    @apply text-lg min-h-8 flex flex-grow-[1] gap-2 flex-wrap 
+}
+
+.selection {
+    @apply border border-black dark:border-white-smoke rounded px-2 hover:text-red-600 hover:border-red-600
+}
+
+.caret {
+    @apply w-4 h-4 px-1 bg-black dark:bg-white-smoke duration-150;
+}
+
+.caret.close {
+    clip-path: polygon(0% 30%, 50% 85%, 100% 30%);
+}
+
+.caret.open {
+    clip-path: polygon(0% 85%, 50% 30%, 100% 85%);
+}
+
+.options {
+    @apply absolute z-50 top-full left-0 list-none w-full max-h-60 overflow-auto border border-[#0f960f] bg-white-smoke dark:bg-black rounded-lg mt-1
+}
+
+.option {
+    @apply p-2 hover:bg-[#009600] z-10 hover:text-white-smoke dark:hover:text-white-smoke focus:bg-[#0f960f] focus:text-white-smoke
+}

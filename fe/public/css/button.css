@@ -3,11 +3,11 @@
 }
 
 .button {
-    @apply py-2 px-5 border rounded-lg
+    @apply py-2 px-5 border rounded-lg border-black dark:border-white duration-150
 }
 
-.button:hover:enabled {
-    @apply underline duration-150
+.button:hover {
+    @apply underline duration-150 bg-zinc-300 dark:bg-zinc-600
 }
 
 .button:disabled {
@@ -15,11 +15,8 @@
 }
 
 .button-green {
-    @apply bg-white-smoke text-traditional-forest-green border-traditional-forest-green
-}
-
-.button-green {
-    @apply dark:bg-traditional-forest-green dark:text-white-smoke
+    @apply bg-white-smoke text-traditional-forest-green border-traditional-forest-green;
+    @apply dark:bg-traditional-forest-green dark:text-white-smoke;
 }
 
 .button-green:hover {
@@ -28,11 +25,8 @@
 
 /* Red button */
 .button-red {
-    @apply bg-white-smoke text-red-600 border-red-600
-}
-
-.button-red {
-    @apply dark:bg-red-600 dark:text-white-smoke
+    @apply bg-white-smoke text-red-600 border-red-600;
+        @apply dark:bg-red-600 dark:text-white-smoke;
 }
 
 .button-red:hover {
@@ -41,12 +35,10 @@
 
 /* Yellow button */
 .button-yellow {
-    @apply bg-white-smoke text-yellow-400 border-yellow-400
+    @apply bg-white-smoke text-yellow-400 border-yellow-400;
+    @apply dark:bg-yellow-600 dark:text-white-smoke;
 }
 
-.button-yellow {
-    @apply dark:bg-yellow-600 dark:text-white-smoke
-}
 
 .button-yellow:hover {
     @apply bg-yellow-100 dark:bg-yellow-500
