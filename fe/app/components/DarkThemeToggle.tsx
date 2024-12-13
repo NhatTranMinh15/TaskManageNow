@@ -11,9 +11,9 @@ const DarkThemeToggle = (props: Props) => {
     document.body.classList.toggle('dark')
   }
   return (
-    <button onClick={toogleDarkMode} className='border-2 border-black dark:border-white duration-150 p-2 rounded-2xl'>
+    <button onClick={toogleDarkMode} className='border-2 border-dark-lime-green dark:border-white-smoke duration-150 p-2 rounded-2xl'>
       {darkMode ?
-        <SunIcon width={25} color='white' />
+        <SunIcon width={25} />
         :
         <MoonIcon width={25} />
       }

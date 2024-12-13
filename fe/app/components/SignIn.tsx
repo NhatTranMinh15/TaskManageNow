@@ -8,7 +8,7 @@ export default function SignIn() {
         await signIn("keycloak")
       }}
     >
-      <button type="submit" className="button">Signin</button>
+      <button type="submit" className="button button-green">Sign In</button>
     </form>
   )
 } 

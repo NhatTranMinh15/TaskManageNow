@@ -14,8 +14,7 @@ const Header = async (props: Props) => {
 
     return (
         <SessionProvider>
-            <header>
-                <div className="header">
+            <header className='header mb-[15px]'>
                     <div className="logo-section ">
                         <img src={"../favicon.ico"} alt={"TaskMane Logo"} width={50} height={50} />
                         <Link href={'/'} className="home-link">
@@ -26,10 +25,9 @@ const Header = async (props: Props) => {
                         <Navbar></Navbar>
                     </div>
                     <div className="auth-section ">
-                        {session ? <AccountSection session={session}></AccountSection> : <SignIn />}
+                        {session ? <AccountSection></AccountSection> : <SignIn />}
                         <DarkThemeToggle />
                     </div>
-                </div>
             </header>
         </SessionProvider>
     )
