@@ -1,44 +1,44 @@
-import React from 'react'
+import Link from 'next/link';
 import { fetchTasks } from '../api/task/route'
-import { PriorityColor, StatusColor, TaskModel } from '../models/Task';
+import { PriorityColor, StatusColor, TaskModel, TaskParamModel } from '../models/Task';
 import Pagination from '../components/Pagination';
-import { getURLParams, URLParams } from '../models/General';
+import { getURLParams } from '@/utils/GeneralUtils';
+import "@/public/css/color.css";
+import Select from './Select';
+import { getTaskUrlParams } from '@/utils/TaskUtils';
+import Table from './Table';
+import { Header } from '../models/General';
 
-type Props = URLParams & {
+type Props = {
+    searchParams?: Promise<TaskParamModel>;
 }
 
-const headers = [
+const headers: Header[] = [
     { name: "ID", value: "id", isCurrentlySorted: false, colStyle: {}, hiddenOnSmall: false },
     { name: "Summary", value: "summary", isCurrentlySorted: false, colStyle: {}, hiddenOnSmall: false },
     // { name: "Description", value: "description", isCurrentlySorted: false, colStyle: {}, hiddenOnSmall: true },
     { name: "Status", value: "status", isCurrentlySorted: false, colStyle: {}, hiddenOnSmall: false },
     { name: "Priority", value: "priority", isCurrentlySorted: false, colStyle: {}, hiddenOnSmall: false },
     // { name: "Created At", value: "created_at", isCurrentlySorted: false, colStyle: {}, hiddenOnSmall: true },
-    { name: "Asignee", value: "user", isCurrentlySorted: false, colStyle: {}, hiddenOnSmall: true },
+    { name: "Asignee", value: "assignee", isCurrentlySorted: false, colStyle: {maxWidth:"15ch"}, hiddenOnSmall: true },
 ]
 const maxColLength = headers.length
+const baseLink = process.env.BASE_TASK_URL || "/task"
+const Task = async ({ searchParams }: Props) => {
+    const taskUrlParams = await getTaskUrlParams(searchParams)
 
-const Task = async (props: Props) => {
-    const { currentPage, search } = await getURLParams(props)
-
-    const response = await fetchTasks({ page: currentPage, size: 5, sort: "", search: search });
-    console.log(response);
+    const response = await fetchTasks(taskUrlParams);
 
     const { content: tasks, totalElements, totalPage } = response
 
-    function handleRowClick(data: TaskModel) {
-    }
     return (
         <>
-            <div className="flex flex-row">
+            <div className="flex flex-row" style={{}}>
                 <div className="basis-1/4 p-2">
-                    <select name="select-all-tasks" defaultValue={"false"} className="w-full select select-green">
-                        <option value={"false"} className="option-green">My Task</option>
-                        <option value="true" className="">All Tasks</option>
-                    </select>
+                    <Select></Select>
                 </div>
-                <div className="basis-1/4 p-2">
-                    <button className="button button-green">Create New Task</button>
+                <div className="basis-1/2 p-2">
+                    <Link href={`${baseLink}/create`} className=" inline-block button button-green">Create New Task</Link>
                 </div>
             </div>
             <>
@@ -60,36 +60,9 @@ const Task = async (props: Props) => {
                                     ))}
                                 </tr>
                             </thead>
-                            <tbody className="table-row-group divide-y max-w-full">
-                                {tasks?.map((task: TaskModel) => (
-                                    <tr key={task.id} className="table-row hoverable-row">
-                                        {
-                                            headers.map((header) => {
-                                                return (
-                                                    <td key={header.value + " " + task.id} className={"truncate " + (header.hiddenOnSmall ? "hidden md:table-cell " : " ")} style={{ maxWidth: `${100 / maxColLength - 1}vw` }}>
-                                                        {(() => {
-                                                            switch (header.value) {
-                                                                case "status":
-                                                                    return <span className={"badge " + StatusColor[task[header.value] as keyof typeof StatusColor]}>{task[header.value]}</span>
-                                                                case "priority":
-                                                                    return <span className={"badge " + PriorityColor[task[header.value] as keyof typeof PriorityColor]}>{task[header.value]}</span>
-                                                                case "user":
-                                                                    return task.user ? `${task.user.first_name} ${task.user.last_name}` : "None";
-                                                                default:
-                                                                    // Add your default case code here
-                                                                    return task[header.value]?.toString() || "";
-                                                            }
-                                                        })()}
-                                                    </td>
-                                                )
-                                            })
-                                        }
-                                    </tr>
-                                ))
-                                }
-                            </tbody>
+                            <Table headers={headers} tasks={tasks}></Table>
                         </table>
-                        <Pagination totalPages={totalPage} currentPage={currentPage} ></Pagination>
+                        <Pagination totalPages={totalPage} currentPage={Number(taskUrlParams.page)} size={+taskUrlParams.size} ></Pagination>
                     </div>
                 }
             </>
