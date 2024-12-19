@@ -42,7 +42,6 @@ export type CreateTaskModel = {
     description: string,
     status: Status,
     priority: Priority,
-    user_id?: string,
     assignee?: string,
     dueDate?:string
 }

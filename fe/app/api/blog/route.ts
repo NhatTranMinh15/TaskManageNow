@@ -1,10 +1,17 @@
-import { BlogPreview, blogs } from "@/app/models/Blog";
+import { Blog, BlogPreview, CreateBlogModel } from "@/app/models/Blog";
+import { Page } from "@/app/models/General";
+import { get, post } from "@/utils/axiosUtils";
 
 export async function getAllBlogPreview() {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return blogs as BlogPreview[]
+    const result = await get(`/blogs/previews`, `/blog`);
+    return result as Page<Blog>
 }
 export async function getBlogBySlug(slug: string) {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    return blogs.find((b) => b.slug.toLowerCase() === slug.toLowerCase())
+    const result: Blog = await get(`/blogs/${slug}`, `/blog/${slug}`);
+    return result;
+}
+
+export const createBlog = async (data: CreateBlogModel) => {
+    const result = await post("/blogs", data, "/blog/create");
+    return result
 }
