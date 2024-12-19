@@ -19,3 +19,13 @@ export const getURLParams = async (params?: Promise<URLParams>) => {
 
     return { ...searchParams, search, page, size, sort }
 }
+export function parseDatetime(date: Date | string) {
+    if (typeof date === "string") {
+        date = new Date(date)
+    }
+    return date.toLocaleDateString("en-UK", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    })
+}
