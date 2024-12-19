@@ -24,7 +24,7 @@ public class UserMapper implements BaseMapper<User, UserSaveRequest, UserRespons
     }
 
     @Override
-    public UserResponse ToResponse(User entity) {
+    public UserResponse toResponse(User entity) {
         return new UserResponse(
                 entity.getId().toString(),
                 entity.getEmail(),
@@ -66,7 +66,7 @@ public class UserMapper implements BaseMapper<User, UserSaveRequest, UserRespons
         return entity;
     }
 
-    public UserResponse ToResponseFromRepresentation(UserRepresentation representation) {
+    public UserResponse toResponseFromRepresentation(UserRepresentation representation) {
         return new UserResponse(
                 representation.getId(),
                 representation.getUsername(),
@@ -76,8 +76,8 @@ public class UserMapper implements BaseMapper<User, UserSaveRequest, UserRespons
         );
     }
 
-    public List<UserResponse> ToResponseListFromRepresentationList(List<UserRepresentation> list) {
-        return list.stream().map(this::ToResponseFromRepresentation).collect(Collectors.toList());
+    public List<UserResponse> toResponseListFromRepresentationList(List<UserRepresentation> list) {
+        return list.stream().map(this::toResponseFromRepresentation).collect(Collectors.toList());
     }
 
     public User fromRepresentation(UserRepresentation representation) {

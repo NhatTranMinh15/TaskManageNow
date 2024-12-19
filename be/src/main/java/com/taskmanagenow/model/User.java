@@ -1,5 +1,6 @@
 package com.taskmanagenow.model;
 
+import com.taskmanagenow.model.abtract.BaseModel;
 import jakarta.persistence.Entity;
 import java.util.UUID;
 import lombok.AllArgsConstructor;

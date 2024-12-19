@@ -19,7 +19,7 @@ public class TaskMapper implements BaseMapper<Task, TaskSaveRequest, TaskRespons
     }
 
     @Override
-    public TaskResponse ToResponse(Task entity) {
+    public TaskResponse toResponse(Task entity) {
         return new TaskResponse(
                 entity.getId(),
                 entity.getSummary(),

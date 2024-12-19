@@ -40,9 +40,8 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity createOne(@Valid @RequestBody TaskSaveRequest request, Authentication authentication) {
-        System.out.println(request);
-        TaskResponse result = service.saveOne(request, authentication);
+    public ResponseEntity createOne(@Valid @RequestBody TaskSaveRequest request) {
+        TaskResponse result = service.saveOne(request);
         return ResponseEntity.ok().body(result);
     }
 

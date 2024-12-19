@@ -7,10 +7,10 @@ public interface BaseMapper<ENTITY, REQUEST, RESPONSE> {
 
     public ENTITY toEntity(REQUEST request);
 
-    public RESPONSE ToResponse(ENTITY entity);
+    public RESPONSE toResponse(ENTITY entity);
 
-    public default List<RESPONSE> ToResponseList(List<ENTITY> list) {
-        return list.stream().map(this::ToResponse).collect(Collectors.toList());
+    public default List<RESPONSE> toResponseList(List<ENTITY> list) {
+        return list.stream().map(this::toResponse).collect(Collectors.toList());
     }
 
     public ENTITY transferPropertiesFrom(ENTITY oldEntity, ENTITY newEntity);

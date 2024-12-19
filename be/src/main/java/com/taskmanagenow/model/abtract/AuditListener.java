@@ -1,4 +1,4 @@
-package com.taskmanagenow.model;
+package com.taskmanagenow.model.abtract;
 
 import com.taskmanagenow.util.Utility;
 import jakarta.persistence.PrePersist;
