@@ -1,13 +1,10 @@
 package com.taskmanagenow.model;
 
+import com.taskmanagenow.model.abtract.BaseModel;
 import com.taskmanagenow.util.constant.Priority;
 import com.taskmanagenow.util.constant.Status;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,8 +29,8 @@ public class Task extends BaseModel {
 
     private LocalDateTime dueDate;
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+//    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Comment> comments = new ArrayList<>();
 
 //    private Set<Task> subTasks;
 //    private Task parentTask;
@@ -43,13 +40,13 @@ public class Task extends BaseModel {
         super(id);
     }
 
-    public void addComment(Comment comment) {
-        comments.add(comment);
-        comment.setTask(this);
-    }
-
-    public void removeComment(Comment comment) {
-        comments.remove(comment);
-        comment.setTask(null);
-    }
+//    public void addComment(Comment comment) {
+//        comments.add(comment);
+//        comment.setTask(this);
+//    }
+//
+//    public void removeComment(Comment comment) {
+//        comments.remove(comment);
+//        comment.setTask(null);
+//    }
 }

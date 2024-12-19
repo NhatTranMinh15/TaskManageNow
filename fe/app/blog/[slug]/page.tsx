@@ -1,10 +1,15 @@
 import { getBlogBySlug } from '@/app/api/blog/route'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import React, { Suspense } from 'react'
+import React from 'react'
 import markdownit from 'markdown-it'
-import ViewCountSkeleton from './ViewCountSkeleton'
 import ViewCount from './ViewCount'
+import { getOneUser } from '@/app/api/user/route'
+import { parseDatetime } from '@/utils/GeneralUtils'
+import CommentForm from '@/app/components/CommentForm'
+import CommentList from '@/app/components/Comment'
+import { PostUrl } from '@/app/models/Comment'
+import { getCommentOfBlog } from '@/app/actions/comment'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -18,8 +23,11 @@ const BlogDetail = async ({ params }: Props) => {
   if (!blog) {
     notFound()
   }
+  const { id, title, content, categories, createdAt, thumbnail, thumbnailAlt, authorId } = blog
+  const commentPage = await getCommentOfBlog(id, slug)
+  const { content: comments } = commentPage
+  const author = await getOneUser(authorId, `/blog/${slug}`)
 
-  const { id, title, content, category, createdAt, thumbnail, image, views, authorId, author } = blog
   const parsedContent = md.render(content)
   return (
     <div className="flex flex-col gap-6 justify-center w-[60vw]">
@@ -27,17 +35,21 @@ const BlogDetail = async ({ params }: Props) => {
         {title}
       </div>
       <div className='font-serif text-right'>
-        {`${createdAt.toDateString()} · ${author ? `${author.firstName} ${author.lastName}` : authorId}`}
+        {`${parseDatetime(createdAt)} · ${author ? `${author.firstName} ${author.lastName}` : ""}`}
       </div>
       <div className='relative w-full h-fit flex justify-center'>
-        <Image src={thumbnail.url} alt={thumbnail.alt} width={200} height={200} className='w-3/4 h-full'></Image>
+        {
+          thumbnail ?
+            <Image src={thumbnail} alt={thumbnailAlt || ""} width={200} height={200} className='w-3/4 h-full'></Image>
+            : ""
+        }
       </div>
-      <div className='px-6'>
-        <article className='prose lg:prose-xl' dangerouslySetInnerHTML={{ __html: parsedContent }} />
+      <div className='px-6 text-base'>
+        <article className='prose lg:prose-xl max-w-full' dangerouslySetInnerHTML={{ __html: parsedContent }} />
       </div>
-      {/* <Suspense fallback={<ViewCountSkeleton />}>
-        <ViewCount id={id} />
-      </Suspense> */}
+      <hr />
+      <CommentForm postUrl={`${PostUrl.BLOG}/${id}`} callbackUrl={`/blog/${slug}`} />
+      <CommentList comments={comments} />
       <ViewCount id={id} />
     </div>
   )

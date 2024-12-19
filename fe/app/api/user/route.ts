@@ -33,8 +33,6 @@ export async function getOneUser(id: string, callbackUrl?: string): Promise<User
     try {
         const response = await axiosInstance.get(`/users/${id}`);
         const data: UserModel = await response.data;
-        // console.log(data);
-
         return data;
     } catch (error) {
         if (error instanceof AxiosError) {

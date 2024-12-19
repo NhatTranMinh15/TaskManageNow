@@ -39,7 +39,7 @@ public class UserService {
                 .users()
                 .search(param, pageRequest.getPageNumber() * pageRequest.getPageSize(), pageRequest.getPageSize());
         return new PageResponse(
-                mapper.ToResponseListFromRepresentationList(response),
+                mapper.toResponseListFromRepresentationList(response),
                 pageRequest.getPageNumber(),
                 (count / pageRequest.getPageSize()) + 1,
                 (long) count
@@ -57,7 +57,7 @@ public class UserService {
     public UserResponse saveOne(UserSaveRequest userSaveRequest) {
         User user = mapper.toEntity(userSaveRequest);
         repository.save(user);
-        return mapper.ToResponse(user);
+        return mapper.toResponse(user);
     }
 
     @Transactional(rollbackOn = RuntimeException.class)
@@ -66,7 +66,7 @@ public class UserService {
                 .orElse(new User(UUID.fromString(userSaveRequest.getId())));
         user = mapper.updateProperties(userSaveRequest, user);
         repository.save(user);
-        return mapper.ToResponse(user);
+        return mapper.toResponse(user);
     }
 
     public void deleteOne(UUID id) {

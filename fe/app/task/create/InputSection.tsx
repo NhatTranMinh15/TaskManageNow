@@ -1,14 +1,12 @@
 import React from 'react'
-import UserSelect from './SelectAssignee'
 
 type Props = {
-    user_id: string
+ 
 }
 
-const InputSection = ({ user_id }: Props) => {
+const InputSection = ({  }: Props) => {
     return (
-        <>
-            <input type="hidden" id="user_id" name="user_id" defaultValue={user_id} />
+        <>  
             <div className="mb-[15px]">
                 <label className="" htmlFor="summary">Summary:</label>
                 <input type="text" className="input w-full !rounded-tl-none  " id="summary" name="summary"  />

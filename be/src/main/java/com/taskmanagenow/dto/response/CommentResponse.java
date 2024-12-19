@@ -8,11 +8,9 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class CommentResponse {
-    UUID commentId;
-    UUID taskId;
+    UUID id;
     String content;
     UUID createdBy;
-//    String username;
     LocalDateTime createdAt;
     UUID updatedBy;
     LocalDateTime updatedAt;

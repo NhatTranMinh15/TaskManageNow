@@ -9,6 +9,5 @@ public class CommentSaveRequest {
     private UUID id;
     @NotNull(message = "Comment must not be null")
     private String content;
-    @NotNull(message = "Task ID must not be null")
-    private UUID taskId;
+    private UUID parentId;
 }

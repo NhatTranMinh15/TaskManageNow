@@ -18,7 +18,15 @@ body {
   @apply antialiased text-black bg-white-smoke dark:text-white-smoke dark:bg-rich-black duration-200;
   font-family: Arial, Helvetica, sans-serif;
 }
-
+/* img{
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  font-style: italic;
+  background-repeat: no-repeat;
+  background-size: cover;
+  shape-margin: 0.15rem;
+} */
 
 @layer utilities {
   .text-balance {
@@ -138,6 +146,10 @@ td {
 
 .preview {
   @apply min-h-6 max-h-60
+}
+
+.prose * {
+  @apply dark:bg-black text-black dark:text-white
 }
 
 .w-md-editor * {

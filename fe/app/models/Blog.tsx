@@ -7,13 +7,12 @@ export type Blog = {
     slug: string;
     preview: string;
     content: string;
-    category: Category[];
+    categories: Category[];
     views: string;
-    thumbnail: TImage;
-    image: TImage[];
+    thumbnail?: string;
+    thumbnailAlt?: string;
     authorId: string;
-    author?: Author
-    createdAt: Date;
+    createdAt: string;
 }
 export type Category = {
     id: string;
@@ -26,37 +25,23 @@ export type Author = {
     firstName: string;
     lastName: string;
 }
-export type TImage = {
-    id: string;
-    url: string;
-    alt: string;
+
+export type CreateBlogModel = {
+    [key: string]: string | string[] | undefined;
+    title: string;
+    preview: string;
+    categories: string[];
+    content: string;
 }
 
 export const categories: Category[] = [
-    { id: "1", name: "Technology", value: "technology" },
-    { id: "2", name: "Health", value: "health" },
-    { id: "3", name: "Travel", value: "travel" },
-    { id: "4", name: "Education", value: "education" }
+    { id: "8c098720-d97f-4a10-8d56-9451d2cc9ac3", name: "Technology", value: "technology" },
+    { id: "9b6e1fbb-2be8-4f98-bf3f-9f93535816c4", name: "Health", value: "health" },
+    { id: "225eb58f-191b-4628-8933-579de769e060", name: "Travel", value: "travel" },
+    { id: "2a95911c-d3b6-4387-b114-9c60356581fa", name: "Education", value: "education" }
 ];
 
-export const blogs: Blog[] = [
-    {
-        id: "e10a3e30-adf9-4747-875f-e42a87d647ac",
-        title: "The Future of AI",
-        slug: "the-future-of-ai",
-        category: [categories[0], categories[2]],
-        preview: "Artificial Intelligence (AI) is set to revolutionize numerous industries, from healthcare to finance, with its rapid advancements. In the near future, we can expect AI to enhance machine learning algorithms, leading to more accurate predictions and smarter decision-making processes. One of the most exciting developments is in natural language processing, where AI will achieve human-like proficiency, making interactions with machines more intuitive and efficient.",
-        views: "1500",
-        authorId: "c24ba545-f3ed-4657-a495-b66c2eea667f",
-        author: {
-            id: "c24ba545-f3ed-4657-a495-b66c2eea667f",
-            username: "tech_guru",
-            firstName: "Alice",
-            lastName: "Smith"
-        },
-        createdAt: new Date("2024-01-01"),
-        image: [{ id: "1", url: "https://picsum.photos/500", alt: "" }],
-        content: `# Welcome to StackEdit!
+const content = `# Welcome to StackEdit!
 
 Hi! I'm your first Markdown file in **StackEdit**. If you want to learn about StackEdit, you can read me. If you want to play with Markdown, you can edit me. Once you have finished with me, you can create new files by opening the **file explorer** on the left corner of the navigation bar.
 
@@ -74,111 +59,5 @@ The file explorer is accessible using the button in left corner of the navigatio
 \`\`\`whooooooooooooooooooo\`\`\`
 
 All your files and folders are presented as a tree in the file explorer. You can switch from one to another by clicking a file in the tree.
-`,
-        thumbnail: { id: "1", url: "https://picsum.photos/500", alt: "" }
-    },
-    {
-        id: "61e63771-eca1-499c-8d0c-f3cf8b20e213",
-        title: "Healthy Living Tips",
-        category: [categories[1]],
-        preview: "Tips and tricks for maintaining a healthy lifestyle.",
-        views: "2300",
-        authorId: "50332860-db23-40f0-897e-964fb8357039",
-        author: {
-            id: "50332860-db23-40f0-897e-964fb8357039",
-            username: "health_expert",
-            firstName: "Bob",
-            lastName: "Johnson"
-        },
-        createdAt: new Date("2024-02-15"),
-        image: [{ id: "1", url: "https://picsum.photos/500", alt: "" }],
-        slug: "healthy-living-tips",
-        content: "```whoooooooooooooooooooooooo ```",
-        thumbnail: { id: "1", url: "https://picsum.photos/500", alt: "" }
+`
 
-    },
-    {
-        id: "b7ad7efe-b7bb-44d5-a4cb-9d7f7f5cb8dd",
-        title: "Top Travel Destinations 2024",
-        category: [categories[2]],
-        preview: "Explore the best travel destinations for 2024.",
-        views: "1800",
-        authorId: "f554d924-600f-4c00-8e13-c3e0bdd075d6",
-        createdAt: new Date("2024-03-10"),
-        image: [{ id: "1", url: "https://picsum.photos/500", alt: "" }],
-        slug: "",
-        content: "",
-        thumbnail: { id: "1", url: "https://picsum.photos/500", alt: "" }
-
-    },
-    {
-        id: "a97fc79a-3fa5-4f52-9795-f49d0755e60f",
-        title: "Online Learning Platforms",
-        category: [categories[3], categories[2]],
-        preview: "A review of the top online learning platforms.",
-        views: "1200",
-        authorId: "deb136e8-7b6e-46b1-8f34-13bd5b1b6809",
-        createdAt: new Date("2024-04-05"),
-        image: [{ id: "1", url: "https://picsum.photos/500", alt: "" }],
-        slug: "",
-        content: "",
-        thumbnail: { id: "1", url: "https://picsum.photos/500", alt: "" }
-
-    },
-    {
-        id: "a97fc79a-3fa5-4f52-9795-f49d0100e60f",
-        title: "Online Learning Platforms",
-        category: [categories[3], categories[2]],
-        preview: "A review of the top online learning platforms.",
-        views: "1200",
-        authorId: "deb136e8-7b6e-46b1-8f34-13bd5b1b6809",
-        createdAt: new Date("2024-04-05"),
-        image: [{ id: "1", url: "https://picsum.photos/500", alt: "" }],
-        slug: "",
-        content: "",
-        thumbnail: { id: "1", url: "https://picsum.photos/500", alt: "" }
-
-    },
-    {
-        id: "a97fc79a-3fa5-4f52-9795-f49dcee5e60f",
-        title: "Online Learning Platforms",
-        category: [categories[3], categories[2]],
-        preview: "A review of the top online learning platforms.",
-        views: "1200",
-        authorId: "deb136e8-7b6e-46b1-8f34-13bd5b1b6809",
-        createdAt: new Date("2024-04-05"),
-        image: [{ id: "1", url: "https://picsum.photos/500", alt: "" }],
-        slug: "",
-        content: "",
-        thumbnail: { id: "1", url: "https://picsum.photos/500", alt: "" }
-
-    },
-    {
-        id: "a97fc79a-3fa5-4f52-9795-f49d0ce5e60f",
-        title: "Online Learning Platforms",
-        category: [categories[3], categories[2]],
-        preview: "A review of the top online learning platforms.",
-        views: "1200",
-        authorId: "deb136e8-7b6e-46b1-8f34-13bd5b1b6809",
-        createdAt: new Date("2024-04-05"),
-        image: [{ id: "1", url: "https://picsum.photos/500", alt: "" }],
-        slug: "",
-        content: "",
-        thumbnail: { id: "1", url: "https://picsum.photos/500", alt: "" }
-
-    },
-    {
-        id: "a97fc79a-3fa5-4f52-9795-f49d6723e60f",
-        title: "Online Learning Platforms",
-        category: [categories[3], categories[2]],
-        preview: "A review of the top online learning platforms.",
-        views: "1200",
-        authorId: "deb136e8-7b6e-46b1-8f34-13bd5b1b6809",
-        createdAt: new Date("2024-04-05"),
-        image: [{ id: "1", url: "https://picsum.photos/500", alt: "" }],
-        slug: "",
-        content: "",
-        thumbnail: { id: "1", url: "https://picsum.photos/500", alt: "" }
-
-    },
-];

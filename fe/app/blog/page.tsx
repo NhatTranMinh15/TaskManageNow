@@ -1,11 +1,13 @@
 import React from 'react'
 import { getAllBlogPreview } from '../api/blog/route';
 import BlogPreviewCard from './BlogPreviewCard';
+import { emptyPage } from '../models/General';
 
 type Props = {}
 
 const Blog = async (props: Props) => {
-    const blogPreviews = await getAllBlogPreview();
+    const page = await getAllBlogPreview();
+    const blogPreviews = page.content || emptyPage
     return (
         <div className='flex flex-col gap-6 w-4/5'>
             {

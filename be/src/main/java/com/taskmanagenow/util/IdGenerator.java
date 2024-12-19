@@ -1,6 +1,6 @@
 package com.taskmanagenow.util;
 
-import com.taskmanagenow.model.BaseModel;
+import com.taskmanagenow.model.abtract.BaseModel;
 import java.io.Serializable;
 import java.util.UUID;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;

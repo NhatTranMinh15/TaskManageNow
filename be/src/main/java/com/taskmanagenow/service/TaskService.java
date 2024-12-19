@@ -30,18 +30,18 @@ public class TaskService implements TaskServiceInterface {
         //        TODO: Specification
         PageRequest pageRequest = (PageRequest) pageable;
         Page<Task> result = repository.findAll(pageRequest);
-        return new PageResponse(mapper.ToResponseList(result.getContent()), result.getNumber(), result.getTotalPages(), result.getTotalElements());
+        return new PageResponse(mapper.toResponseList(result.getContent()), result.getNumber(), result.getTotalPages(), result.getTotalElements());
     }
 
     public TaskResponse getOne(UUID id, Authentication authentication) {
         Task result = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task does not exist!"));
-        return mapper.ToResponse(result);
+        return mapper.toResponse(result);
     }
 
-    public TaskResponse saveOne(TaskSaveRequest taskSaveRequest, Authentication authentication) {
+    public TaskResponse saveOne(TaskSaveRequest taskSaveRequest) {
         Task task = mapper.toEntity(taskSaveRequest);
         repository.save(task);
-        return mapper.ToResponse(task);
+        return mapper.toResponse(task);
     }
 
     @Transactional
@@ -49,7 +49,7 @@ public class TaskService implements TaskServiceInterface {
         Task task = repository.getReferenceById(id);
         task = mapper.updateProperties(taskSaveRequest, task);
         repository.save(task);
-        return mapper.ToResponse(task);
+        return mapper.toResponse(task);
     }
 
     public void deleteOne(UUID id, Authentication authentication) {

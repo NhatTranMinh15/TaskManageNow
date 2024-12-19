@@ -1,11 +1,10 @@
 'use client'
-import Select, { Option } from '@/app/components/Select'
+import { handleFormSubmit } from '@/app/actions/blog'
+import Select from '@/app/components/Select'
 import { categories, Category } from '@/app/models/Blog'
 import useDebounce from '@/utils/useDebounce'
 import MDEditor from '@uiw/react-md-editor'
 import React, { useActionState, useEffect, useState } from 'react'
-import useSWR from 'swr'
-import { handleFormSubmit } from './action'
 
 type Props = {}
 
@@ -25,7 +24,7 @@ const CreateBlogForm = (props: Props) => {
     }, [debouncedSearch])
 
     const [state, formAction, isPending] = useActionState(handleFormSubmit, {});
-
+    
     return (
         <form action={formAction} className='flex w-full max-w-full flex-col'>
             <h2 className='text-4xl font-bold mb-3'>Create Blog</h2>
@@ -47,8 +46,8 @@ const CreateBlogForm = (props: Props) => {
                 </section>
 
                 <section>
-                    <label htmlFor="category">Category</label>
-                    <Select multiple inputName={'category'} options={options} search={search} setSearch={setSearch} />
+                    <label htmlFor="categories">Category</label>
+                    <Select multiple inputName={'categories'} options={options} search={search} setSearch={setSearch} />
                 </section>
 
                 <section>
