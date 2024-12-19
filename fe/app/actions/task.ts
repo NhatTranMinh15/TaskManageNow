@@ -9,7 +9,6 @@ const formSchema = z.object({
     description: z.string(),
     priority: z.string().min(1, "Priority must not be empty"),
     status: z.string().min(1, "Status must not be empty"),
-    user_id: z.string(),
     dueDate: z.coerce.date().optional().or(z.literal('')),
     assignee: z.string().uuid("Wrong format. Must be UUID").optional().or(z.literal('')),
 })
@@ -21,7 +20,6 @@ export const handleFormSubmit = async (prevState: any, formData: FormData) => {
             description: formData.get("description"),
             priority: formData.get("priority"),
             status: formData.get("status"),
-            user_id: formData.get("user_id"),
             dueDate:formData.get("dueDate"),
             assignee: formData.get("assignee"),
         }
@@ -32,7 +30,6 @@ export const handleFormSubmit = async (prevState: any, formData: FormData) => {
             description: parseForm.description,
             priority: parseForm.priority as Priority,
             status: parseForm.status as Status,
-            user_id: parseForm.user_id,
             assignee: parseForm.assignee,
             dueDate:parseForm.dueDate?.toString()
         }
